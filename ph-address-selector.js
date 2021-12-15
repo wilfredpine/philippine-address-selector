@@ -1,7 +1,10 @@
+/**
+ * https://github.com/redmalmon/philippine-address-selector
+ */
 
 var my_handlers = {
     // fill province
-    fill_provinces: function () {
+    fill_provinces: function() {
         //selected region
         var region_code = $(this).val();
 
@@ -34,23 +37,23 @@ var my_handlers = {
 
         // filter & fill
         var url = 'ph-json/province.json';
-        $.getJSON(url, function (data) {
-            var result = data.filter(function (value) {
+        $.getJSON(url, function(data) {
+            var result = data.filter(function(value) {
                 return value.region_code == region_code;
             });
 
-            result.sort(function (a, b) {
+            result.sort(function(a, b) {
                 return a.province_name.localeCompare(b.province_name);
             });
 
-            $.each(result, function (key, entry) {
+            $.each(result, function(key, entry) {
                 dropdown.append($('<option></option>').attr('value', entry.province_code).text(entry.province_name));
             })
 
         });
     },
     // fill city
-    fill_cities: function () {
+    fill_cities: function() {
         //selected province
         var province_code = $(this).val();
 
@@ -76,23 +79,23 @@ var my_handlers = {
 
         // filter & fill
         var url = 'ph-json/city.json';
-        $.getJSON(url, function (data) {
-            var result = data.filter(function (value) {
+        $.getJSON(url, function(data) {
+            var result = data.filter(function(value) {
                 return value.province_code == province_code;
             });
 
-            result.sort(function (a, b) {
+            result.sort(function(a, b) {
                 return a.city_name.localeCompare(b.city_name);
             });
 
-            $.each(result, function (key, entry) {
+            $.each(result, function(key, entry) {
                 dropdown.append($('<option></option>').attr('value', entry.city_code).text(entry.city_name));
             })
 
         });
     },
     // fill barangay
-    fill_barangays: function () {
+    fill_barangays: function() {
         // selected barangay
         var city_code = $(this).val();
 
@@ -111,23 +114,23 @@ var my_handlers = {
 
         // filter & Fill
         var url = 'ph-json/barangay.json';
-        $.getJSON(url, function (data) {
-            var result = data.filter(function (value) {
+        $.getJSON(url, function(data) {
+            var result = data.filter(function(value) {
                 return value.city_code == city_code;
             });
 
-            result.sort(function (a, b) {
+            result.sort(function(a, b) {
                 return a.brgy_name.localeCompare(b.brgy_name);
             });
 
-            $.each(result, function (key, entry) {
+            $.each(result, function(key, entry) {
                 dropdown.append($('<option></option>').attr('value', entry.brgy_code).text(entry.brgy_name));
             })
 
         });
     },
 
-    onchange_barangay: function () {
+    onchange_barangay: function() {
         // set selected text to input
         var barangay_text = $(this).find("option:selected").text();
         let barangay_input = $('#barangay-text');
@@ -137,7 +140,7 @@ var my_handlers = {
 };
 
 
-$(function () {
+$(function() {
     // events
     $('#region').on('change', my_handlers.fill_provinces);
     $('#province').on('change', my_handlers.fill_cities);
@@ -151,8 +154,8 @@ $(function () {
     dropdown.prop('selectedIndex', 0);
     const url = 'ph-json/region.json';
     // Populate dropdown with list of regions
-    $.getJSON(url, function (data) {
-        $.each(data, function (key, entry) {
+    $.getJSON(url, function(data) {
+        $.each(data, function(key, entry) {
             dropdown.append($('<option></option>').attr('value', entry.region_code).text(entry.region_name));
         })
     });
